@@ -1,0 +1,56 @@
+스케일링 이슈 : 프론트와 백엔드 서버통합하면, 프론트쪽 요구가 많으면 백앤드서버까지 불필요하게 늘려야함..
+단점은 복잡도 증가임. 장점은 프론트, 백엔드 서버 분리하기때문에 필요한 서버만 증설해주면됨.
+
+next쓰는 이유 : 웹사이트 검색이 잘되게 하기 위해, SPA 단점 특성상 검색엔진이 안좋음. 넥스트가 쉽게해줌.
+실행은 cli에 next 치면됨. next는 import React 이런거 할필요없음, 페이지가 그냥 주소체계해줌. 페이지에 대해서 서버사이드
+랜더링과 코드스플리팅 자동으로 해줌. 리덕스와 리덕스사가랑도 연동이 됨. 웹팩의 일부 지원해줌. 나중에 웹팩은 필요함.
+
+실무에서 주로 쓰는 내용
+프론트 : 리액트, 리덕스, 리덕스 사가, 넥스트, 스타일 컴포넌츠
+백엔드 : 익스프레스, 디비, ORM(시퀄라이즈), 패스포트, multer(S3), 소켓IO. 이미지 압축(람다)
+
+
+1. 백엔트, 프론트 폴더 나누고
+2. 필요 라이브러리 설치.(리액트, 돔, 넥스트, -D 웹팩, eslint, nodemon(재시작해주는거))
+3. eslint 설정.
+
+    {
+    "parserOptions": {
+        "ecmaVersion": 2018,   //버전설정, 2019도 됨
+        "sourceType": "module", //import, export, required 다쓸수있게 모듈로.
+        "ecmaFeatures": {
+            "jsx": true  // jsx 문법쓰게한다.
+        }
+    },
+    "env": {
+        "browser": true,  //브라우져기반 쓴다.
+        "node":true  //노드도 쓸거다.
+    },
+    "extends": [
+        "eslint : recommended",   //eslint에서 추천하는 코딩스타일 쓸꺼다.
+        "plugin : react/recommended"      //플러그인은 이거쓸꺼다.
+    ],
+    "plugins": [  //eslint가 기본적으로 import, export  훅스 지원안해서 설정해야함. 
+        "import",   
+        "react-hooks"  
+    ]
+}
+플러그인은 직접 설치해줘야함. ( npm i -D eslint-plugin-import eslint-plugin-react eslint-plugin-react-hooks)
+
+4. 넥스트에 라우터 기능있는데, 리액트 라우터보다 훨씬 편리하다. pages 폴더 만들기.(폴더명고정) (넥스트에서는 확장자명 jsx 잘안써서 js로 통일)
+5. index.js(메인화면) 만든다.
+6. ant design 사용, 여기서 커버안되는것은 스타일 컴포넌트 사용. Ant 디자인하고 스타일 컴포넌트 커스텀됨. 앵귤러나 뷰도 써도됨.
+   npm i antd
+7. 블로그같이 고정되는 부분은 component 폴더 만들어서 거기다가 생성.
+8. css만들어서 해도 되는데 그냥 inline 타입으로 만들예정.
+9. 회원가입 페이지에서 required 쓰는거는 비어있으면 채우라고 알림.
+10. 공통된 부분 리랜더링 방지를 위해 레이아웃 _app.js 로분리. 
+11. props 검증. npm i prop-types
+12. _document.js(html, head, body 부분 ), _app.js(root 부분), _error.js(에러화면) 는 넥스트에 들어가있는데, 직접만들면 커스텀으로 사용할 수 있음.,
+13. 레이아웃 . and 디자인은 반응형 기본제공.
+14. 더미데이터 활용.
+15. 쪼개기 연습 => 하나에 다 넣어보고, 데브툴에서 쓸데없는 곳까지 리랜더링되면 쪼개면서 해라.(반복문, 조건문, 폼 위주);
+16. 배열안에 jsx 넣을때는 key 넣어줘야함.
+17. 리덕스 설치시 redux와 리액트와 연결해주는 react-redux를 같이 설치해주어야함.
+18. react-redux에서 원래 훅지원안했다가. react-redux@next 부터는 지원해서 이거 설치해줘야함.
+   => react-redux 버전 7.1부터 훅지원함.
